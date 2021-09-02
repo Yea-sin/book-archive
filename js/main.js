@@ -5,7 +5,7 @@ const fetchData = async url => {
     return data
 } ;
 
-// elements by id
+// elements
 const search = document.getElementById('search-btn');
 const input = document.getElementById('input-field');
 const errors = document.getElementById('errors');
@@ -26,27 +26,21 @@ search.addEventListener('click', ()=>{
         errors.innerText = '';
         fetchData(`http://openlibrary.org/search.json?q=${inputValue}`)
         .then(data => displayBooks(data))
-    }
-    
+    }  
 })
-
+// display books
 const displayBooks = books => {
-    resultCount.innerText = `
-    Showing 1 to 100 of ${books.numFound} books
-    `
+    resultCount.innerText = `( Showing 1 to 100 of ${books.numFound} books )`
     if(books.numFound !== 0){
         spinner.classList.add('d-none')
-        books.docs.forEach(book => {
-            
+        books.docs.forEach(book => {           
             // destructuring
             const {title, author_name, first_publish_year, publisher, cover_i} = book;
-            // console.log(book.cover_i)
             const div = document.createElement('div');
                 div.classList.add('col-6');
-            if(book.cover_i === undefined){
-               
+            if(cover_i === undefined){       
                 div.innerHTML=`
-                <div class="shadow-lg p-4 me-5" style="width: 600px;">
+                <div class="shadow-lg rounded p-4 me-5" style="width: 600px;">
                     <div class=" mb-3" style="max-width: 540px;">
                         <div class="row g-0">
                             <div class="col-md-5 d-flex align-items-center">
@@ -58,7 +52,7 @@ const displayBooks = books => {
                                 <h4 class="card-title fw-bold">${title}</h4>
                                 <h5 class="fst-italic">Author :${author_name}</h5>
                                 <h5 class="fst-italic">Publisher : ${publisher}</h5>
-                                <h5 class="fst-italic">Published Date : ${first_publish_year}</h5>
+                                <h5 class="fst-italic">First Published: ${first_publish_year}</h5>
                                 <div>
                                     <button type="button" class="btn btn-lg btn-outline-secondary mt-4">Details</   button>
                                     <button type="button" class="btn btn-lg ms-3 btn-outline-secondary mt-4">Add To Cart</button>
@@ -73,7 +67,7 @@ const displayBooks = books => {
             }else{
                 
                 div.innerHTML=`
-                <div class="shadow-lg p-4 me-5" style="width: 600px;">
+                <div class="shadow-lg rounded p-4 me-5" style="width: 600px;">
                     <div class=" mb-3" style="max-width: 540px;">
                         <div class="row g-0">
                             <div class="col-md-5 d-flex align-items-center">
@@ -86,7 +80,7 @@ const displayBooks = books => {
                                 <h4 class="card-title fw-bold">${title}</h4>
                                 <h5 class="fst-italic">Author :${author_name}</h5>
                                 <h5 class="fst-italic">Publisher : ${publisher}</h5>
-                                <h5 class="fst-italic">Published Date : ${first_publish_year}</h5>
+                                <h5 class="fst-italic">First Published: ${first_publish_year}</h5>
                                 <div>
                                     <button type="button" class="btn btn-lg btn-outline-secondary mt-4">Details</   button>
                                     <button type="button" class="btn btn-lg ms-3 btn-outline-secondary mt-4">Add To Cart</button>
@@ -98,17 +92,11 @@ const displayBooks = books => {
                 </div>
                 `
                 booksContainer.appendChild(div)
-            }
-            
-            
-        })
-            
-    }else{
+            }       
+        })      
+        }else{
         spinner.classList.add('d-none')
         errors.innerText='Result Not Found';
         resultCount.innerText = '';
-    }
-
-   
-
-    }
+        }
+        }
