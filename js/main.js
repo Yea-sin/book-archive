@@ -24,7 +24,7 @@ search.addEventListener('click', ()=>{
     }else{
         spinner.classList.remove('d-none')
         errors.innerText = '';
-        fetchData(`http://openlibrary.org/search.json?q=${inputValue}`)
+        fetchData(`https://openlibrary.org/search.json?q=${inputValue}`)
         .then(data => displayBooks(data))
     }  
 })
@@ -35,27 +35,26 @@ const displayBooks = books => {
         spinner.classList.add('d-none')
         books.docs.forEach(book => {           
             // destructuring
-            const {title, author_name, first_publish_year, publisher, cover_i} = book;
+            const {title, author_name, first_publish_year,publisher, cover_i} = book;
             const div = document.createElement('div');
                 div.classList.add('col-6');
             if(cover_i === undefined){       
                 div.innerHTML=`
-                <div class="shadow-lg rounded p-4 me-5" style="width: 600px;">
+                <div class="shadow-lg rounded  me-5" style="width: 400px;">
                     <div class=" mb-3" style="max-width: 540px;">
                         <div class="row g-0">
-                            <div class="col-md-5 d-flex align-items-center">
+                            <div class="col-md-4 d-flex align-items-center">
                               <img src="images/empty-image.jpg" class="img-fluid rounded-start w-100" alt="NO Image Found">
                               
                             </div>
-                            <div class="col-md-7">
+                            <div class="col-md-8">
                                 <div class="card-body">
-                                <h4 class="card-title fw-bold">${title}</h4>
+                                <h5 class="card-title fw-bold">${title}</h5>
                                 <h5 class="fst-italic">Author :${author_name}</h5>
                                 <h5 class="fst-italic">Publisher : ${publisher}</h5>
                                 <h5 class="fst-italic">First Published: ${first_publish_year}</h5>
                                 <div>
-                                    <button type="button" class="btn btn-lg btn-outline-secondary mt-4">Details</   button>
-                                    <button type="button" class="btn btn-lg ms-3 btn-outline-secondary mt-4">Add To Cart</button>
+                                    <button type="button" class="btn btn-lg btn-outline-secondary mt-4">Details</button>
                                 </div>
                                 </div>
                             </div>
@@ -67,23 +66,22 @@ const displayBooks = books => {
             }else{
                 
                 div.innerHTML=`
-                <div class="shadow-lg rounded p-4 me-5" style="width: 600px;">
+                <div class="shadow-lg rounded p-4 me-5" style="width: 400px;">
                     <div class=" mb-3" style="max-width: 540px;">
                         <div class="row g-0">
-                            <div class="col-md-5 d-flex align-items-center">
+                            <div class="col-md-4 d-flex align-items-center">
                               <img src="https://covers.openlibrary.org/b/id/${cover_i}-M.jpg
                               " class="img-fluid rounded-start w-100" alt="...">
                               
                             </div>
-                            <div class="col-md-7">
+                            <div class="col-md-8">
                                 <div class="card-body">
-                                <h4 class="card-title fw-bold">${title}</h4>
+                                <h5 class="card-title fw-bold">${title}</h5>
                                 <h5 class="fst-italic">Author :${author_name}</h5>
                                 <h5 class="fst-italic">Publisher : ${publisher}</h5>
                                 <h5 class="fst-italic">First Published: ${first_publish_year}</h5>
                                 <div>
                                     <button type="button" class="btn btn-lg btn-outline-secondary mt-4">Details</   button>
-                                    <button type="button" class="btn btn-lg ms-3 btn-outline-secondary mt-4">Add To Cart</button>
                                 </div>
                                 </div>
                             </div>
